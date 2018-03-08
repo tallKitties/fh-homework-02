@@ -9,6 +9,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-inverse bg-inverse">
+      <%= link_to 'The Library', root_path, class: 'navbar-brand' %>
+      <%= form_tag(books_path, method: 'get', id: 'search-form', class: 'form-inline my-2') do %>
+        <%= text_field_tag :keyword, params[:keyword], placeholder: 'Search Books', class: 'form-control mr-2' %>
+
+        <%= submit_tag "Search", name: nil, class: 'btn' %>
+      <% end %>
+    </nav>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -17,18 +17,22 @@
   </thead>
 
   <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= link_to book.title, book %></td>
-        <td><%= book.author %></td>
-        <td><%= book.publisher %></td>
-        <td><%= book.genre %></td>
-        <td><%= book.classification %></td>
-        <td><%= book.general_type %></td>
-        <td><%= book.year %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <% if @books.present? %>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= link_to book.title, book %></td>
+          <td><%= book.author %></td>
+          <td><%= book.publisher %></td>
+          <td><%= book.genre %></td>
+          <td><%= book.classification %></td>
+          <td><%= book.general_type %></td>
+          <td><%= book.year %></td>
+          <td><%= link_to 'Edit', edit_book_path(book) %></td>
+          <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <p>There are no books containing &quot<%= params[:search] %>&quot</p>
     <% end %>
   </tbody>
 </table>
