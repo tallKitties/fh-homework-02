@@ -1,5 +1,13 @@
 @import 'bootstrap';
 
-nav {
-  // height: 50px;
+.table td {
+  vertical-align: middle;
+}
+
+.table th {
+  white-space: nowrap;
+}
+
+td .btn-outline-primary {
+  white-space: normal;
 }

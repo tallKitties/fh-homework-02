@@ -9,12 +9,11 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse bg-inverse">
+    <nav class="navbar navbar-inverse bg-inverse sticky-top flex-row justify-content-between">
       <%= link_to 'The Library', root_path, class: 'navbar-brand' %>
-      <%= form_tag(books_path, method: 'get', id: 'search-form', class: 'form-inline my-2') do %>
+      <%= form_tag(books_path, method: 'get', id: 'search-form', class: 'form-inline float-right') do %>
         <%= text_field_tag :keyword, params[:keyword], placeholder: 'Search Books', class: 'form-control mr-2' %>
-
-        <%= submit_tag "Search", name: nil, class: 'btn' %>
+        <%= submit_tag "Search", name: nil, role: 'button', class: 'btn btn-outline-secondary' %>
       <% end %>
     </nav>
 
