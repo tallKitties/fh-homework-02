@@ -1,10 +1,5 @@
 require "faker"
 
-def generate_fake_time(seed = 568_024_668)
-  # default is 18 years
-  Time.now - Faker::Number.between(1, seed)
-end
-
 Book.destroy_all
 
 classifications = [
@@ -45,13 +40,6 @@ types = %w[Fiction Nonfiction]
     year: Faker::Number.between(1900, 2018),
     publisher: Faker::Book.publisher
   )
-end
-
-Book.all.each do |book|
-  book.created_at = generate_fake_time
-  # make sure it's updated at the same or later date
-  book.updated_at = generate_fake_time(Time.now - book.created_at)
-  book.save
 end
 
 puts "Created #{Book.count} books!"
