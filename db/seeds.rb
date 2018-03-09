@@ -1,6 +1,8 @@
 require "faker"
 
 Book.destroy_all
+Author.destroy_all
+Authorship.destroy_all
 
 classifications = [
   'General Works',
@@ -33,7 +35,7 @@ types = %w[Fiction Nonfiction]
 50.times do
   Book.create!(
     title: Faker::Book.unique.title,
-    author: Faker::Book.author,
+    sub_title: Faker::BackToTheFuture.quote,
     genre: Faker::Book.genre,
     classification: classifications.sample,
     general_type: types.sample,
@@ -42,4 +44,25 @@ types = %w[Fiction Nonfiction]
   )
 end
 
+25.times do
+  Author.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    age: Faker::Number.between(20, 100)
+  )
+end
+
+authors = Author.all.ids
+books = Book.all.ids
+
+books.each do |book_id|
+  author_id = authors.sample
+  Authorship.create!(
+    book_id: book_id,
+    author_id: author_id
+  )
+end
+
 puts "Created #{Book.count} books!"
+puts "Created #{Author.count} authors!"
+puts "Created #{Authorship.count} authorships!"
