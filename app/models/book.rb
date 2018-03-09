@@ -1,8 +1,4 @@
 class Book < ApplicationRecord
-  def self.column_names
-    %w[title author classification genre general_type]
-  end
-
   def self.search(params)
     keyword = params[:keyword]
     if keyword
