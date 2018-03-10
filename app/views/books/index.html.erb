@@ -7,7 +7,7 @@
 </div>
 
 <div class="table-responsive">
-  <table class="table table-striped">
+  <table class="table table-hover table-sm">
     <thead>
       <tr>
         <th>Title</th>
@@ -24,16 +24,24 @@
     <tbody>
       <% if @books.present? %>
         <% @books.each do |book| %>
+          <% author_names = book.authors.map {|a| a.full_name} %>
           <tr>
-            <td><%= link_to book.title, book, class: 'btn btn-outline-primary' %></td>
-            <td><%= book.authors.first.full_name %></td>
+            <td><%= link_to book.title, book, class: 'btn' %></td>
+            <td>
+              <% author_names.each do |name| %>
+                <%= name %>
+                <% if author_names.count > 1 && name != author_names.last %>
+                  <hr>
+                <% end %>
+              <% end %>
+            </td>
             <td><%= book.publisher %></td>
             <td><%= book.genre %></td>
             <td><%= book.classification %></td>
             <td><%= book.general_type %></td>
             <td><%= book.year %></td>
-            <td><%= link_to 'Edit', edit_book_path(book), class: "btn btn-warning btn-sm" %></td>
-            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %></td>
+            <td><%= link_to 'Edit', edit_book_path(book), class: "btn btn-outline-warning btn-sm" %></td>
+            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %></td>
           </tr>
         <% end %>
       <% else %>
