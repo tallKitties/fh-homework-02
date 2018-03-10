@@ -8,10 +8,15 @@
   white-space: nowrap;
 }
 
-td .btn {
-  white-space: normal;
-}
-
 .table hr {
   margin: 5px 0 5px 0;
+}
+
+td .btn {
+  white-space: normal;
+  text-align: left;
+}
+
+.table td + td {
+  padding-left: 0.5rem;
 }
