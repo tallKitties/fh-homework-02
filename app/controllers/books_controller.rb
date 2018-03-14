@@ -11,6 +11,7 @@ class BooksController < ApplicationController
   # GET /books/1.json
   def show
     @authors = @book.authors
+    # @author_names = @authors.map { |a| a.full_name }
   end
 
   # GET /books/new

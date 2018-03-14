@@ -4,8 +4,13 @@
   vertical-align: middle;
 }
 
+.table td + td, .table th + th {
+  padding-left: 0.5rem;
+}
+
 .table th {
   white-space: nowrap;
+  text-align: center;
 }
 
 .table hr {
@@ -15,8 +20,4 @@
 td .btn {
   white-space: normal;
   text-align: left;
-}
-
-.table td + td {
-  padding-left: 0.5rem;
 }

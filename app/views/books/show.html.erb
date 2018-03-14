@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-<% author_names = @authors.map { |a| a.full_name } %>
 
 <p>
   <strong>Title:</strong>
@@ -8,9 +7,9 @@
 
 <p>
   <strong>Author(s):</strong>
-  <% author_names.each.with_index(1) do |name, count| %>
-    <%= name %>
-    <% if count < author_names.count %>
+  <% @authors.each.with_index(1) do |author, count| %>
+    <%= link_to author.full_name, author, class: 'btn p-0' %>
+    <% if count < @authors.length %>
       , 
     <% end %>
   <% end %>
@@ -46,5 +45,6 @@
   <%= @book.year %>
 </p>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
+<%= link_to 'Edit', edit_book_path(@book),
+  class: "btn btn-outline-warning btn-sm"%>
+<%= link_to 'Back', books_path, class: "btn btn-sm btn-outline-primary" %>
