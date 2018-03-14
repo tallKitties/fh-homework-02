@@ -46,6 +46,18 @@
     <%= f.number_field :year %>
   </div>
 
+  <div class="field">
+    <% Author.all.each do |author| %>
+      <%= hidden_field_tag "book[author_ids][]", nil %>
+      <%= check_box_tag "book[author_ids][]",
+        author.id,
+        @book.author_ids.include?(author.id),
+        id: author.id %>
+      <%= label_tag author.id, author.full_name %>
+      <br>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

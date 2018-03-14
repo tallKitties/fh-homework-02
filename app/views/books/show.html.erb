@@ -9,9 +9,7 @@
   <strong>Author(s):</strong>
   <% @authors.each.with_index(1) do |author, count| %>
     <%= link_to author.full_name, author, class: 'btn p-0' %>
-    <% if count < @authors.length %>
-      , 
-    <% end %>
+    <%= ',' if count < @authors.length %>
   <% end %>
 </p>
 
@@ -36,7 +34,7 @@
 </p>
 
 <p>
-  <strong>General type:</strong>
+  <strong>Book type:</strong>
   <%= @book.general_type %>
 </p>
 

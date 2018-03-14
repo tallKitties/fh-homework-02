@@ -19,9 +19,7 @@
   <strong>Books:</strong>
   <% @author_books.each.with_index(1) do |book, count| %>
     <%= link_to book.title, book, class: 'btn p-0' %>
-    <% if count < @author_books.length %>
-      ,
-    <% end %>
+    <%= ',' if count < @author_books.length %>
   <% end %>
 </p>
 
