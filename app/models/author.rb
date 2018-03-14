@@ -5,4 +5,10 @@ class Author < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def self.search(params)
+    keyword = params[:keyword]
+    where("first_name ILIKE ? OR last_name ILIKE ? OR age LIKE ?",
+      "%#{keyword}%")
+  end
 end
