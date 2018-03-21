@@ -6,7 +6,7 @@
   <strong>Author(s):</strong>
   <% @authors.each.with_index(1) do |author, count| %>
     <%= link_to author.full_name, author, class: 'btn p-0' %>
-    <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, class: 'btn btn-sm btn-danger' %>
+     - <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, class: 'btn btn-sm btn-danger remove-author' %>
     <br>
   <% end %>
   <div class="col-12">
