@@ -23,6 +23,14 @@ class BooksController < ApplicationController
   def edit
   end
 
+  def remove_author
+    Book.remove_author(params)
+    @book = Book.find(params[:book_id])
+    respond_to do |format|
+      format.html { redirect_to @book, notice: 'Author was removed successfully.' }
+    end
+  end
+
   # POST /books
   # POST /books.json
   def create
@@ -71,6 +79,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:title, :sub_title, :publisher, :genre, :classification, :general_type, :year, :author_ids)
+      params.require(:book).permit(:title, :sub_title, :publisher, :genre, :classification, :general_type, :year)
     end
 end

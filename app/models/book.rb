@@ -17,4 +17,9 @@ class Book < ApplicationRecord
       all
     end
   end
+
+  def self.remove_author(params)
+    book = find(params[:book_id])
+    book.authors.delete(params[:author_id])
+  end
 end
