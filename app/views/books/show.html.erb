@@ -1,16 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @book.title %>
-</p>
-
+<h2><i><%= @book.title %></i></h2>
+<br>
 <p>
   <strong>Author(s):</strong>
   <% @authors.each.with_index(1) do |author, count| %>
     <%= link_to author.full_name, author, class: 'btn p-0' %>
     <%= ',' if count < @authors.length %>
   <% end %>
+  <br>
+  <div class="col-12">
+    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#AddAuthorModal">
+      Add an Author
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#RemoveAuthorModal">
+      Remove Author(s)
+    </button>
+  </div>
 </p>
 
 <p>
@@ -44,5 +50,31 @@
 </p>
 
 <%= link_to 'Edit', edit_book_path(@book),
-  class: "btn btn-outline-warning btn-sm"%>
-<%= link_to 'Back', books_path, class: "btn btn-sm btn-outline-primary" %>
+  class: "btn btn-warning btn-sm"%>
+<%= link_to 'Back', books_path, class: "btn btn-sm btn-primary" %>
+
+<!-- Add Author Modal -->
+<div class="modal fade" id="AddAuthorModal" tabindex="-1" role="dialog" aria-labelledby="AddAuthorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="AddAuthorModalLabel"><i><%= @book.title %></i></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= simple_form_for @author, url: book_authors_path(@book) do |f| %>
+        <div class="modal-body">
+          <%= f.input :first_name %>
+          <%= f.input :last_name %>
+          <%= f.input :age %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit "Add an Author", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

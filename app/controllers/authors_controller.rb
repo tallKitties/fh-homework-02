@@ -25,14 +25,15 @@ class AuthorsController < ApplicationController
   # POST /authors
   # POST /authors.json
   def create
-    @author = Author.new(author_params)
+    @book = Book.find(params[:book_id])
+    @book.authors.new(author_params)
 
     respond_to do |format|
-      if @author.save
-        format.html { redirect_to @author, notice: 'Author was successfully created.' }
-        format.json { render :show, status: :created, location: @author }
+      if @book.save
+        format.html { redirect_to @book, notice: 'Author was successfully created.' }
+        format.json { render :show, status: :created, location: @book }
       else
-        format.html { render :new }
+        format.html { redirect_to @book, notice: 'There was an error creating the author.' }
         format.json { render json: @author.errors, status: :unprocessable_entity }
       end
     end

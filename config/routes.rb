@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :authors
   root 'books#index'
-  resources :books
+  resources :books do
+    resources :authors, only: :create
+  end
+  resources :authors, only: [:show, :index, :edit, :update, :destroy]
 end

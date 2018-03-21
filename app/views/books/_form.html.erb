@@ -18,18 +18,6 @@
   <%= f.input :classification %>
   <%= f.input :general_type %>
   <%= f.input :year %>
-
-  <% Author.all.each do |author| %>
-    <div class="form-check">
-      <%= hidden_field_tag "book[author_ids][]", nil %>
-      <%= check_box_tag "book[author_ids][]",
-        author.id,
-        @book.author_ids.include?(author.id),
-        id: author.id,
-        class: 'form-check-input' %>
-      <%= label_tag author.id, author.full_name, class: 'form-check-label' %>
-    </div>
-  <% end %>
   <br>
 
   <%= f.button :submit, class: 'btn btn-outline-primary' %>
