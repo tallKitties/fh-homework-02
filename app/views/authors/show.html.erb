@@ -18,9 +18,10 @@
 <p>
   <strong>Books:</strong>
   <div class="col-12">
-    <% @author_books.each.with_index(1) do |book, count| %>
+    <% @authorships.each do |current| %>
+      <% book = current.book %>
       <%= link_to book.title, book, class: 'btn p-0' %>
-       - <%= link_to 'Remove Book', author_remove_book_path(@author, book_id: book.id), method: :delete, class: 'btn btn-sm btn-danger remove-item' %>
+       - <%= link_to 'Remove Book', authorship_path(current, author_id: "#{@author.id}"), method: :delete, class: 'btn btn-sm btn-danger remove-item' %>
       <br>
     <% end %>
     <hr class="col-3 float-left">
@@ -30,6 +31,7 @@
     </button>
   </div>
 </p>
+<hr>
 
 <%= link_to 'Edit', edit_author_path(@author),
   class: "btn btn-outline-warning btn-sm"%>
@@ -45,15 +47,14 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <%= simple_form_for @book, url: book_authors_path(@author) do |f| %>
+      <%= simple_form_for @authorship, url: authorships_path do |f| %>
         <div class="modal-body">
-          <%= f.input :first_name %>
-          <%= f.input :last_name %>
-          <%= f.input :age %>
+          <%= f.hidden_field :author_id, value: "#{@author.id}" %>
+          <%= f.input :book_id, collection: @books, prompt: 'Select a book', label_method: :title, value_method: :id %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <%= f.submit "Add an Author", class: 'btn btn-primary' %>
+          <%= f.submit "Add a Book", class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>

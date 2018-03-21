@@ -10,7 +10,9 @@ class AuthorsController < ApplicationController
   # GET /authors/1
   # GET /authors/1.json
   def show
-    @author_books = @author.books
+    @authorships = Authorship.where(author_id: "#{@author.id}")
+    @authorship = Authorship.new()
+    @books = Book.all_except(@author.books.ids).order(:title)
   end
 
   # GET /authors/new

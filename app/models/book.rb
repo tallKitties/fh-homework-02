@@ -21,4 +21,8 @@ class Book < ApplicationRecord
   def remove_author(params)
     self.authors.delete(params[:author_id])
   end
+
+  def self.all_except(ids)
+    where.not(id: ids)
+  end
 end
