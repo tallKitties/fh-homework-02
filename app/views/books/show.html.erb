@@ -4,14 +4,16 @@
 <br>
 <p>
   <strong>Author(s):</strong>
-  <% @authors.each.with_index(1) do |author, count| %>
-    <%= link_to author.full_name, author, class: 'btn p-0' %>
-     - <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, class: 'btn btn-sm btn-danger remove-author' %>
-    <br>
-  <% end %>
   <div class="col-12">
+    <% @authors.each.with_index(1) do |author, count| %>
+      <%= link_to author.full_name, author, class: 'btn p-0' %>
+       - <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, class: 'btn btn-sm btn-danger remove-author' %>
+      <br>
+    <% end %>
+    <hr class="col-3 float-left">
+    <span class="clearfix"></span>
     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#AddAuthorModal">
-      Add an Author
+        Add an Author
     </button>
   </div>
 </p>

@@ -24,8 +24,8 @@ class BooksController < ApplicationController
   end
 
   def remove_author
-    Book.remove_author(params)
     @book = Book.find(params[:book_id])
+    @book.remove_author(params)
     respond_to do |format|
       format.html { redirect_to @book, notice: 'Author was removed successfully.' }
     end

@@ -26,7 +26,13 @@ class AuthorsController < ApplicationController
   # POST /authors.json
   def create
     @book = Book.find(params[:book_id])
-    @book.authors.new(author_params)
+    author = Author.where(author_params)
+
+    if author.exists?
+      @book.authorships.new(author_id: author[0][:id])
+    else
+      @book.authors.new(author_params)
+    end
 
     respond_to do |format|
       if @book.save
