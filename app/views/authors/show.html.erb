@@ -17,12 +17,45 @@
 
 <p>
   <strong>Books:</strong>
-  <% @author_books.each.with_index(1) do |book, count| %>
-    <%= link_to book.title, book, class: 'btn p-0' %>
-    <%= ',' if count < @author_books.length %>
-  <% end %>
+  <div class="col-12">
+    <% @author_books.each.with_index(1) do |book, count| %>
+      <%= link_to book.title, book, class: 'btn p-0' %>
+       - <%= link_to 'Remove Book', author_remove_book_path(@author, book_id: book.id), method: :delete, class: 'btn btn-sm btn-danger remove-item' %>
+      <br>
+    <% end %>
+    <hr class="col-3 float-left">
+    <span class="clearfix"></span>
+    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#AddBookModal">
+        Add an Book
+    </button>
+  </div>
 </p>
 
 <%= link_to 'Edit', edit_author_path(@author),
   class: "btn btn-outline-warning btn-sm"%>
 <%= link_to 'Back', books_path, class: "btn btn-sm btn-outline-primary" %>
+
+<!-- Add Book Modal -->
+<div class="modal fade" id="AddBookModal" tabindex="-1" role="dialog" aria-labelledby="AddBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="AddBookModalLabel"><i><%= @author.full_name %></i></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= simple_form_for @book, url: book_authors_path(@author) do |f| %>
+        <div class="modal-body">
+          <%= f.input :first_name %>
+          <%= f.input :last_name %>
+          <%= f.input :age %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit "Add an Author", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

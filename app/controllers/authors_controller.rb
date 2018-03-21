@@ -59,6 +59,14 @@ class AuthorsController < ApplicationController
     end
   end
 
+  def remove_book
+    @author = Author.find(params[:author_id])
+    @author.remove_book(params)
+    respond_to do |format|
+      format.html { redirect_to @author, notice: 'Book was removed successfully.' }
+    end
+  end
+
   # DELETE /authors/1
   # DELETE /authors/1.json
   def destroy

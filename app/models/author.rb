@@ -11,4 +11,8 @@ class Author < ApplicationRecord
     where("first_name ILIKE ? OR last_name ILIKE ? OR age LIKE ?",
       "%#{keyword}%")
   end
+
+  def remove_book(params)
+    self.books.delete(params[:book_id])
+  end
 end
