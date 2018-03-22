@@ -7,7 +7,7 @@
   <div class="col-12">
     <% @authors.each.with_index(1) do |author, count| %>
       <%= link_to author.full_name, author, class: 'btn p-0' %>
-       - <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, class: 'btn btn-sm btn-danger remove-item' %>
+       - <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, data: {confirm: "Are you sure you want to delete #{author.full_name}?"}, class: 'btn btn-sm btn-danger remove-item' %>
       <br>
     <% end %>
     <hr class="col-3 float-left">

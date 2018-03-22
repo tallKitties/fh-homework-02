@@ -21,7 +21,7 @@
     <% @authorships.each do |current| %>
       <% book = current.book %>
       <%= link_to book.title, book, class: 'btn p-0' %>
-       - <%= link_to 'Remove Book', authorship_path(current, author_id: "#{@author.id}"), method: :delete, class: 'btn btn-sm btn-danger remove-item' %>
+       - <%= link_to 'Remove Book', authorship_path(current, author_id: "#{@author.id}"), method: :delete, data: {confirm: "Are you sure you want to delete #{book.title}?"}, class: 'btn btn-sm btn-danger remove-item' %>
       <br>
     <% end %>
     <hr class="col-3 float-left">

@@ -41,7 +41,7 @@
             <td><%= book.general_type %></td>
             <td><%= book.year %></td>
             <td><%= link_to 'Edit', edit_book_path(book), class: "btn btn-outline-warning btn-sm" %></td>
-            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %></td>
+            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: "Are you sure you want to delete #{book.title}?" }, class: "btn btn-outline-danger btn-sm" %></td>
           </tr>
         <% end %>
       </tbody>
