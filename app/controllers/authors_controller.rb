@@ -11,20 +11,25 @@ class AuthorsController < ApplicationController
   # GET /authors/1
   # GET /authors/1.json
   def show
-    @authorship = Authorship.new()
-
     @authorships = Authorship.where(author_id: "#{@author.id}").includes(:book)
-    authored_books = @authorships.map { |i| i.book.id }
-    @books = Book.all_except(authored_books).order(:title)
   end
 
   # GET /authors/1/edit
   def edit
+    @authorship = Authorship.new()
+    @authorships = Authorship.where(author_id: "#{@author.id}").includes(:book)
+    authored_books = @authorships.map { |a| a.book.id }
+    @books = Book.all_except(authored_books).order(:title)
   end
 
   # POST /authors
   # POST /authors.json
   def create
+    author = Author.find_by(author_params)
+    if author
+      redirect_to author, notice: 'Author already exists!' and return
+    end
+
     author = Author.new(author_params)
 
     respond_to do |format|
@@ -53,10 +58,12 @@ class AuthorsController < ApplicationController
   end
 
   def remove_book
-    @author = Author.find(params[:author_id])
-    @author.remove_book(params)
+    authorship = Authorship.find(params[:id])
+    author = Author.find(params[:author_id])
+    authorship.destroy
+
     respond_to do |format|
-      format.html { redirect_to @author, notice: 'Book was removed successfully.' }
+      format.html { redirect_to author, notice: "#{authorship.book.title} was removed successfully." }
     end
   end
 

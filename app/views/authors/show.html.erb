@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<h2><i><%= @author.full_name %></i></h2>
 <p>
   <strong>First name:</strong>
   <%= @author.first_name %>
@@ -16,47 +17,17 @@
 </p>
 
 <p>
-  <strong>Books:</strong>
+  <strong>Book(s):</strong>
   <div class="col-12">
     <% @authorships.each do |current| %>
       <% book = current.book %>
       <%= link_to book.title, book, class: 'btn p-0' %>
-       - <%= link_to 'Remove Book', authorship_path(current, author_id: "#{@author.id}"), method: :delete, data: {confirm: "Are you sure you want to delete #{book.title}?"}, class: 'btn btn-sm btn-danger remove-item' %>
       <br>
     <% end %>
-    <hr class="col-3 float-left">
-    <span class="clearfix"></span>
-    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#AddBookModal">
-        Add an Book
-    </button>
   </div>
 </p>
 <hr>
 
 <%= link_to 'Edit', edit_author_path(@author),
   class: "btn btn-outline-warning btn-sm"%>
-<%= link_to 'Back', books_path, class: "btn btn-sm btn-outline-primary" %>
-
-<!-- Add Book Modal -->
-<div class="modal fade" id="AddBookModal" tabindex="-1" role="dialog" aria-labelledby="AddBookModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="AddBookModalLabel"><i><%= @author.full_name %></i></h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <%= simple_form_for @authorship, url: authorships_path do |f| %>
-        <div class="modal-body">
-          <%= f.hidden_field :author_id, value: "#{@author.id}" %>
-          <%= f.input :book_id, collection: @books, prompt: 'Select a book', label_method: :title, value_method: :id %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <%= f.submit "Add a Book", class: 'btn btn-primary' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+<%= link_to 'Back', authors_path, class: "btn btn-sm btn-outline-primary" %>

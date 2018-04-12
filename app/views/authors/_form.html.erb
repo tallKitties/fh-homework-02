@@ -1,4 +1,7 @@
-<%= form_for(author) do |f| %>
+<%= simple_form_for author, defaults: {
+  wrapper_html: { class: "col-sm-4 col-12" },
+  label_html: { class: "font-weight-bold" }
+  } do |f| %>
   <% if author.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
@@ -10,23 +13,12 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+  <div class="row">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :age, wrapper_html: { class: "col-sm-2 col-12"} %>
   </div>
+  <br>
 
-  <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :age %>
-    <%= f.number_field :age %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>

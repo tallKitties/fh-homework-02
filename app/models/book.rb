@@ -21,12 +21,4 @@ class Book < ApplicationRecord
   def self.all_except(ids)
     where.not(id: ids)
   end
-
-  def author_names
-    authors.map { |a| a.full_name }
-  end
-
-  def remove_author(params)
-    self.authors.delete(params[:author_id])
-  end
 end

@@ -27,10 +27,9 @@
           <tr>
             <td><%= link_to book.title, book, class: 'btn' %></td>
             <td>
-              <% author_names = book.author_names %>
-              <% author_names.each do |name| %>
-                <%= name %>
-                <% if author_names.count > 1 && name != author_names.last %>
+              <% book.authors.each do |author| %>
+                <%= link_to author.full_name, author_path(author) %>
+                <% if book.authors.count > 1 && author != book.authors.last %>
                   <hr>
                 <% end %>
               <% end %>

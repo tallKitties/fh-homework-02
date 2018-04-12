@@ -22,8 +22,4 @@ class Author < ApplicationRecord
   def book_titles
     books.map { |b| b.title }
   end
-
-  def remove_book(params)
-    self.books.delete(params[:book_id])
-  end
 end

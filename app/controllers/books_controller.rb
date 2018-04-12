@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:destroy, :update]
+  before_action :set_book_with_authors, only: [:show, :edit]
 
   # GET /books
   # GET /books.json
@@ -10,9 +11,6 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @authors = @book.authors
-    @author = Author.new
-    @authorships = @book.authorships
   end
 
   # GET /books/new
@@ -22,14 +20,7 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
-  end
-
-  def remove_author
-    @book = Book.find(params[:book_id])
-    @book.remove_author(params)
-    respond_to do |format|
-      format.html { redirect_to @book, notice: 'Author was removed successfully.' }
-    end
+    @author = Author.new
   end
 
   def new_author
@@ -101,6 +92,11 @@ class BooksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
+    end
+
+    def set_book_with_authors
+      @book = Book.includes(:authors).find(params[:id])
+      @authors = @book.authors
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

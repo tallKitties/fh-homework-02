@@ -1,9 +1,51 @@
 <br>
-<h2>Editing <i><%= @book.title %></i></h2>
+<h2>Editing: <i><%= @book.title %></i></h2>
+
+<p>
+  <strong>Author(s):</strong>
+  <div class="col-12">
+    <% @authors.each.with_index(1) do |author, count| %>
+      <%= link_to author.full_name, author, class: 'btn p-0' %>
+       - <%= link_to 'Remove Author',
+            authorship_path(@book.authorships.find_by(author_id: author.id)),
+            method: :delete,
+            data: {confirm: "Are you sure you want to delete #{author.full_name}?"},
+            class: 'btn btn-sm btn-danger remove-item' %>
+      <br>
+    <% end %>
+    <hr class="col-3 float-left">
+    <span class="clearfix"></span>
+    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#AddAuthorModal">
+        Add an Author
+    </button>
+  </div>
+</p>
 
 <%= render 'form', book: @book %>
 
 <br>
-<%= link_to 'Edit', edit_book_path(@book),
-  class: "btn btn-outline-warning btn-sm"%>
 <%= link_to 'Back', books_path, class: "btn btn-sm btn-outline-primary" %>
+
+<!-- Add Author Modal -->
+<div class="modal fade" id="AddAuthorModal" tabindex="-1" role="dialog" aria-labelledby="AddAuthorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="AddAuthorModalLabel"><i><%= @book.title %></i></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= simple_form_for @author, url: book_new_author_path(@book) do |f| %>
+        <div class="modal-body">
+          <%= f.input :first_name %>
+          <%= f.input :last_name %>
+          <%= f.input :age %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Add an Author", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
