@@ -4,7 +4,8 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.json
   def index
-    @authors = Author.all
+    @authors = Author.search(params).includes(:books)
+    @author = Author.new
   end
 
   # GET /authors/1
@@ -17,11 +18,6 @@ class AuthorsController < ApplicationController
     @books = Book.all_except(authored_books).order(:title)
   end
 
-  # GET /authors/new
-  def new
-    @author = Author.new
-  end
-
   # GET /authors/1/edit
   def edit
   end
@@ -29,21 +25,14 @@ class AuthorsController < ApplicationController
   # POST /authors
   # POST /authors.json
   def create
-    @book = Book.find(params[:book_id])
-    author = Author.where(author_params)
-
-    if author.exists?
-      @book.authorships.new(author_id: author[0][:id])
-    else
-      @book.authors.new(author_params)
-    end
+    author = Author.new(author_params)
 
     respond_to do |format|
-      if @book.save
-        format.html { redirect_to @book, notice: 'Author was successfully created.' }
-        format.json { render :show, status: :created, location: @book }
+      if author.save
+        format.html { redirect_to author, notice: 'Author was successfully created.' }
+        format.json { render :show, status: :created, location: author }
       else
-        format.html { redirect_to @book, notice: 'There was an error creating the author.' }
+        format.html { redirect_to author, notice: 'There was an error creating the author.' }
         format.json { render json: @author.errors, status: :unprocessable_entity }
       end
     end

@@ -1,5 +1,12 @@
 @import 'bootstrap';
 
+.authors-table {
+  td {
+    border-top: 1px solid #777;
+  }
+}
+
+
 .table td {
   vertical-align: middle;
 }

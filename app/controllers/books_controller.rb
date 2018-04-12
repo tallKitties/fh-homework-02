@@ -12,6 +12,7 @@ class BooksController < ApplicationController
   def show
     @authors = @book.authors
     @author = Author.new
+    @authorships = @book.authorships
   end
 
   # GET /books/new
@@ -28,6 +29,31 @@ class BooksController < ApplicationController
     @book.remove_author(params)
     respond_to do |format|
       format.html { redirect_to @book, notice: 'Author was removed successfully.' }
+    end
+  end
+
+  def new_author
+    book = Book.find(params[:book_id])
+    author = Author.find_by(author_params)
+
+    if author
+      if book.authorships.find_by(author_id: author.id)
+        redirect_to book, notice: "#{book.title} already has that author." and return
+      else
+        book.authorships.new(author_id: author.id)
+      end
+    else
+      book.authors.new(author_params)
+    end
+
+    respond_to do |format|
+      if book.save
+        format.html { redirect_to book, notice: 'Author was successfully created.' }
+        format.json { render :show, status: :created, location: book }
+      else
+        format.html { redirect_to book, notice: 'There was an error creating the author.' }
+        format.json { render json: aauthor.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -80,5 +106,9 @@ class BooksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
       params.require(:book).permit(:title, :sub_title, :publisher, :genre, :classification, :general_type, :year)
+    end
+
+    def author_params
+      params.require(:author).permit(:first_name, :last_name, :age)
     end
 end

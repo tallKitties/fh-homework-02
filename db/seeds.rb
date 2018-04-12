@@ -52,14 +52,13 @@ end
   )
 end
 
-authors = Author.all.ids
-books = Book.all.ids
+author_ids = Author.pluck(:id)
+book_ids = Book.pluck(:id)
 
-books.each do |book_id|
-  author_id = authors.sample
+book_ids.each do |book_id|
   Authorship.create!(
     book_id: book_id,
-    author_id: author_id
+    author_id: author_ids.sample
   )
 end
 

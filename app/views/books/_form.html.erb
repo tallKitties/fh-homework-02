@@ -10,14 +10,15 @@
       </ul>
     </div>
   <% end %>
-  
-  <%= f.input :title %>
-  <%= f.input :sub_title %>
-  <%= f.input :publisher %>
-  <%= f.input :genre %>
-  <%= f.input :classification %>
-  <%= f.input :general_type %>
-  <%= f.input :year %>
+  <div class="row">
+    <%= f.input :title, wrapper_html: { class: "col-sm-6 col-12" } %>
+    <%= f.input :sub_title, wrapper_html: { class: "col-sm-6 col-12" } %>
+    <%= f.input :publisher, wrapper_html: { class: "col-sm-6 col-12" } %>
+    <%= f.input :genre, wrapper_html: { class: "col-sm-6 col-12" } %>
+    <%= f.input :classification, wrapper_html: { class: "col-sm-6 col-12" } %>
+    <%= f.input :general_type, wrapper_html: { class: "col-sm-6 col-12" } %>
+    <%= f.input :year, wrapper_html: { class: "col-sm-6 col-12" } %>
+  </div>
   <br>
 
   <%= f.button :submit, class: 'btn btn-outline-primary' %>

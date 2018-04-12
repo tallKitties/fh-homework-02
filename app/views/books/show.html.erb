@@ -7,7 +7,11 @@
   <div class="col-12">
     <% @authors.each.with_index(1) do |author, count| %>
       <%= link_to author.full_name, author, class: 'btn p-0' %>
-       - <%= link_to 'Remove Author', book_remove_author_path(@book, author_id: author.id), method: :delete, data: {confirm: "Are you sure you want to delete #{author.full_name}?"}, class: 'btn btn-sm btn-danger remove-item' %>
+       - <%= link_to 'Remove Author',
+            authorship_path(@authorships.find_by(author_id: author.id)),
+            method: :delete,
+            data: {confirm: "Are you sure you want to delete #{author.full_name}?"},
+            class: 'btn btn-sm btn-danger remove-item' %>
       <br>
     <% end %>
     <hr class="col-3 float-left">
@@ -48,9 +52,10 @@
   <%= @book.year %>
 </p>
 
+<%= link_to 'Go Back', books_path, class: "btn btn-sm btn-primary col-1" %>
 <%= link_to 'Edit', edit_book_path(@book),
-  class: "btn btn-warning btn-sm"%>
-<%= link_to 'Back', books_path, class: "btn btn-sm btn-primary" %>
+  class: "btn btn-warning btn-sm col-1"%>
+<%= link_to 'Delete', @book, method: :delete, data: { confirm: "Are you sure you want to delete #{@book.title}?" }, class: "btn btn-danger btn-sm col-1" %>
 
 <!-- Add Author Modal -->
 <div class="modal fade" id="AddAuthorModal" tabindex="-1" role="dialog" aria-labelledby="AddAuthorModalLabel" aria-hidden="true">
@@ -62,14 +67,13 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <%= simple_form_for @author, url: book_authors_path(@book) do |f| %>
+      <%= simple_form_for @author, url: book_new_author_path(@book) do |f| %>
         <div class="modal-body">
           <%= f.input :first_name %>
           <%= f.input :last_name %>
           <%= f.input :age %>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <%= f.submit "Add an Author", class: 'btn btn-primary' %>
         </div>
       <% end %>

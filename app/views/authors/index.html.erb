@@ -1,31 +1,72 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Authors</h1>
+<div class="flex-row justify-content-between">
+  <p id="notice"><%= notice %></p>
+  <h1 class="float-left">Authors</h1>
+  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#AddAuthorModal">
+    Add an Author
+  </button>
+  <span class="clearfix"></span>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Age</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% if @authors.present? %>
+  <div class="table-responsive">
+    <table class="table table-hover table-sm authors-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Books Authored</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @authors.each do |author| %>
-      <tr>
-        <td><%= author.first_name %></td>
-        <td><%= author.last_name %></td>
-        <td><%= author.age %></td>
-        <td><%= link_to 'Show', author %></td>
-        <td><%= link_to 'Edit', edit_author_path(author) %></td>
-        <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @authors.each do |author| %>
+          <tr>
+            <td><%= link_to author.full_name, author, class: 'btn' %></td>
+            <td class="text-center"><%= author.age %></td>
+            <td class="text-center">
+              <% book_titles = author.book_titles %>
+              <% book_titles.each do |title| %>
+                <%= title %>
+                <% if book_titles.count > 1 && title != book_titles.last %>
+                  <hr>
+                <% end %>
+              <% end %>
+            </td>
+            <td><%= link_to 'Edit', edit_author_path(author), class: "btn btn-outline-warning btn-sm" %></td>
+            <td><%= link_to 'Delete', author, method: :delete, data: { confirm: "Are you sure you want to delete #{author.full_name}?" }, class: "btn btn-outline-danger btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-center">Sorry, there are no authors containing &quot<%= params[:keyword] %>&quot</p>
+<% end %>
 
 <br>
 
-<%= link_to 'New Author', new_author_path %>
+<!-- Add Author Modal -->
+<div class="modal fade" id="AddAuthorModal" tabindex="-1" role="dialog" aria-labelledby="AddAuthorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="AddAuthorModalLabel"><i><%= 'Create an Author' %></i></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= simple_form_for @author do |f| %>
+        <div class="modal-body">
+          <%= f.input :first_name %>
+          <%= f.input :last_name %>
+          <%= f.input :age %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Add an Author", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

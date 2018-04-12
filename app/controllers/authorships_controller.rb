@@ -2,7 +2,7 @@ class AuthorshipsController < ApplicationController
 
   def create
     @authorship = Authorship.new(authorship_params)
-    @author = Author.find(authorship_params[:author_id])
+    @author = Author.find_by(authorship_params[:author_id])
 
     respond_to do |format|
       if @authorship.save
@@ -14,11 +14,13 @@ class AuthorshipsController < ApplicationController
   end
 
   def destroy
-    @authorship = Authorship.find(params[:id])
-    @author = @authorship.author
-    @authorship.destroy
+    authorship = Authorship.find(params[:id])
+    author = authorship.author
+    authorship.destroy
+
     respond_to do |format|
-      format.html { redirect_to @author, notice: 'Book was successfully removed.' }
+      format.html { redirect_to authorship.book,
+        notice: "#{author.full_name} was successfully removed from #{authorship.book.title}." }
     end
   end
 

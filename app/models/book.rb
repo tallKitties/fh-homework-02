@@ -5,7 +5,7 @@ class Book < ApplicationRecord
   def self.search(params)
     keyword = params[:keyword]
     if keyword
-      books = joins(:authors).where("title ILIKE ? OR publisher ILIKE ? OR classification ILIKE ? OR genre ILIKE ? OR general_type ILIKE ? OR authors.first_name ILIKE ? OR authors.last_name ILIKE ?",
+      joins(:authors).where("title ILIKE ? OR publisher ILIKE ? OR classification ILIKE ? OR genre ILIKE ? OR general_type ILIKE ? OR authors.first_name ILIKE ? OR authors.last_name ILIKE ?",
         "%#{keyword}%",
         "%#{keyword}%",
         "%#{keyword}%",
@@ -18,11 +18,15 @@ class Book < ApplicationRecord
     end
   end
 
-  def remove_author(params)
-    self.authors.delete(params[:author_id])
-  end
-
   def self.all_except(ids)
     where.not(id: ids)
+  end
+
+  def author_names
+    authors.map { |a| a.full_name }
+  end
+
+  def remove_author(params)
+    self.authors.delete(params[:author_id])
   end
 end
